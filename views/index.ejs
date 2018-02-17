@@ -30,6 +30,7 @@
   <button id="btn" class="btn btn-primary">Send</button>
   <script>
   var socket = io.connect('http://chatvj-chatvj.193b.starter-ca-central-1.openshiftapps.com/');
+  //  var socket = io.connect('http://0.0.0.0:8080');
 // Dom Handling
 var message = document.getElementById('message');
 var handle = document.getElementById('handle');
@@ -44,7 +45,7 @@ button.addEventListener('click',function(){
   });
 });
 socket.on('chat',function(data){
-output.innerHTML += '<p><b>'+data.handle+'</b></p><p><div class="alert alert-info">'+data.message+'</div></p>';
+  $('#output').prepend('<p><b>'+data.handle+'</b></p><p><div class="alert alert-info">'+data.message+'</div></p>');
 });
   </script>
 </body>
