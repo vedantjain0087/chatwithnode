@@ -1,0 +1,51 @@
+<html>
+<head>
+  <title>Chat App</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style type="text/css">
+  #chatbox{
+    border:1px solid black;
+    padding:20px;
+  }
+  #output{
+    height:400px;
+    overflow:auto;
+  }
+  </style>
+</head>
+<body>
+  <div id="chatbox">
+  <div id="output">
+  </div>
+  <input class="form-control" id="handle" type="text" placeholder="Enter your Name"><br>
+  <textarea class="form-control" id="message" placeholder="message"></textarea><br>
+  <button id="btn" class="btn btn-primary">Send</button>
+  <script>
+  var socket = io.connect('http://vednodechat-websocket.193b.starter-ca-central-1.openshiftapps.com/');
+// Dom Handling
+var message = document.getElementById('message');
+var handle = document.getElementById('handle');
+var button = document.getElementById('btn');
+var output = document.getElementById('output');
+//Handling The events
+
+button.addEventListener('click',function(){
+  socket.emit('chat',{
+    message:message.value,
+    handle:handle.value
+  });
+});
+socket.on('chat',function(data){
+output.innerHTML += '<p><b>'+data.handle+'</b></p><p><div class="alert alert-info">'+data.message+'</div></p>';
+});
+  </script>
+</body>
+</html>
